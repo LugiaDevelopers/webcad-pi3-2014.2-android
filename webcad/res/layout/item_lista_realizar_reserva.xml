@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/id_txt_curso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/curso_txt" />
+
+    <TextView
+        android:id="@+id/id_item_curso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/id_txt_curso"
+        android:text="Curso teste" />
+
+    <TextView
+        android:id="@+id/id_txt_equipamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_txt_curso"
+        android:text="@string/equipamento_txt" />
+
+    <TextView
+        android:id="@+id/id_item_equipamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_txt_curso"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/id_txt_equipamento"
+        android:text="Equipamento teste" />
+
+    <TextView
+        android:id="@+id/id_txt_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_txt_equipamento"
+        android:text="@string/data_txt" />
+
+    <TextView
+        android:id="@+id/id_item_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_txt_equipamento"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/id_txt_data"
+        android:text="dd/MM/yyyy" />
+
+</RelativeLayout>

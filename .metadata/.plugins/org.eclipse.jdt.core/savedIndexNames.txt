@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+C:\Users\José Allison\Dropbox\DEVELOPER\workspace-pi3\webcad-pi3-2014.2-android\.metadata\.plugins\org.eclipse.jdt.core
+1284074322.index
+1511486371.index

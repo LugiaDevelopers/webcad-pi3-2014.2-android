@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Webcad</string>
+    <string name="email">E-mail</string>
+    <string name="senha">Senha</string>
+    <string name="login">Login</string>
+    
+<!--  Essas String foi definida assim por não ter um nome certo pra ela ainda -->
+	<string name="titulo">Titulo</string>
+	<string name="subtitulo">Subtitulo</string>
+	
+	<string name="curso">Curso</string>
+	<string name="equipamento">Equipamento</string>
+	<string name="data">Data</string>
+	<string name="buscar">Buscar</string>
+	
+	<string name="curso_txt">Curso:</string>
+	<string name="equipamento_txt">Equipamento:</string>
+	<string name="data_txt">Data:</string>
+	
+	<string name="curso_spinner">Selecione o Curso</string>
+	<string name="equipamento_spinner">Selecione o Equipamento</string>
+	<string name="data_spinner">Selecione a Data</string>
+	
+	
+	<string name="adicionar_reserva">Adicionar Reserva</string>
+	
+	<string name="about">About</string>
+	<string name="sair">Sair</string>
+	
+	<string name="empresa">© Lugia Developers Inc, 2012-2014</string>
+	<string name="direitos">All rights reserved.</string>
+	<string name="sistema">Webcad - Reservas Online</string>
+	<string name="versao">Versão: Mobile-1.0</string>
+	
+	<!-- Aqui estou declarando os itens que irão aparecer no spinner -->
+	
+	<string-array name="array_itens_cursos">
+	    <item>Selecione o Curso</item>
+        <item>Análise e Desenvolvimento de Sistemas</item>
+        <item>Rede de Computadores</item>
+        <item>Administração</item>
+        <item>Ciências Contábeis</item>
+        <item>Gestão Comercial</item>
+        <item>Teologia</item>
+         <item>Filosofia</item>
+        <item>Letras</item>
+        <item>Pedagogia</item>
+    </string-array>
+	
+	<string-array name="array_itens_equipamentos">
+         <item>Selecione o Equipamento</item>
+        <item>Data Show</item>
+        <item>Notebook</item>
+        <item>Caixa de Som</item>
+        <item>Cabo HDMI</item> 
+    </string-array>
+	
+	
+	
+</resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:orientation="vertical" >
+
+   
+    <Spinner
+        android:id="@+id/id_spinner_curso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/curso_spinner" />
+
+ 
+
+    <Spinner
+        android:id="@+id/id_spinner_equipamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/equipamento_spinner" />
+
+    <CalendarView
+        android:id="@+id/id_caledar_viewe"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:showWeekNumber="false" />
+
+    <Button
+        android:id="@+id/id_btn_bruscar_reserva"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:background="@color/verde_normal"
+        android:onClick="acao"
+        android:text="@string/buscar"
+        android:textColor="@color/branco"
+        android:textSize="20sp" 
+        />
+
+</LinearLayout>

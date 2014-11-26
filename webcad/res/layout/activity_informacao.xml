@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/branco" >
+
+    <!-- Linha Curso -->
+
+    <TextView
+        android:id="@+id/id_txt_curso_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/curso_txt"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/id_item_curso_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/id_txt_curso_info"
+        android:text="Informação do Curso"
+        android:textSize="18sp"
+         />
+
+    <!-- Linha Equipamento -->
+
+    <TextView
+        android:id="@+id/id_txt_equipamento_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_txt_curso_info"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/equipamento_txt"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/id_item_equipamento_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_txt_curso_info"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/id_txt_equipamento_info"
+        android:text="Informação do Equipamento"
+        android:textSize="18sp" />
+
+    <!-- Linha Data -->
+
+    <TextView
+        android:id="@+id/id_txt_data_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_txt_equipamento_info"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/data_txt"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/id_item_data_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_txt_equipamento_info"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/id_txt_data_info"
+        android:text="dd/MM/yyyy"
+        android:textSize="18sp" />
+
+    <DigitalClock 
+         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_below="@id/id_item_data_info"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
+        android:textSize="18sp"/>
+    
+    
+  
+    <!-- 
+    
+    <ImageView
+        android:id="@+id/id_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_item_data_info"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_action_about_preto" />    -->
+
+</RelativeLayout>

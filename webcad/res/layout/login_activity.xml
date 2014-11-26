@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco" >
+
+    <EditText
+        android:id="@+id/id_campo_email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bg_edit_text"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/id_campo_senha"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/id_campo_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_edit_text"
+        android:hint="@string/senha"
+        android:inputType="textPassword"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/id_btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@id/id_campo_senha"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="25dp"
+        android:background="@color/verde_normal"
+        android:onClick="acao"
+        android:text="@string/login"
+        android:textColor="@color/cinza_91"
+        android:textSize="22sp" />
+
+</RelativeLayout>
