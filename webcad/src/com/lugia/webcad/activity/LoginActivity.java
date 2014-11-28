@@ -41,6 +41,7 @@ public class LoginActivity extends Activity {
 		if (useEmail != "" && useSenha != "") {
 			if (fazerLogin("http://192.168.25.7:8080/WebcadeService/login/fazerLogin/"+ useEmail + "&" + useSenha) == true) {
 				Intent it = new Intent(this, PrincipalActivity.class);
+				it.putExtra("email", useEmail);
 				startActivity(it);
 			} else {
 				Toast.makeText(getApplicationContext(), "Usuario invalido",

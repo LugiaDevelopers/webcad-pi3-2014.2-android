@@ -1,7 +1,16 @@
 package com.lugia.webcad.activity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -10,6 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +33,8 @@ import com.lugia.webcad.adapters.ReservaAdapter;
 import com.lugia.webcad.entidade.Reserva;
 
 public class PrincipalActivity extends ListActivity {
-
+	private ArrayList<Reserva> reservas;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,20 +42,27 @@ public class PrincipalActivity extends ListActivity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle("Reservas realizadas");
 
-		List<Reserva> reservas = new ArrayList<Reserva>();
-		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
+//		List<Reserva> reservas = new ArrayList<Reserva>();
+//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
+//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
+//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
+//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
+//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
+//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
+//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
+//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
+//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
+//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
+//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
+//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
 
+		Intent it = getIntent();
+		String email = it.getStringExtra("email");
+		
+		listaDeReservas(email);
+		
+//		Toast.makeText(getApplicationContext(), ""+reservas.get(0).getData(),
+//				Toast.LENGTH_SHORT).show();
 		ReservaAdapter reservaAdapeter = new ReservaAdapter(reservas, this);
 		ListView lista = (ListView) findViewById(android.R.id.list);
 		lista.setAdapter(reservaAdapeter);
@@ -72,10 +90,9 @@ public class PrincipalActivity extends ListActivity {
 		case R.id.id_about:
 
 			Intent telaAbout = new Intent();
-			telaAbout.setClass(this,  ActivityAbout.class);
+			telaAbout.setClass(this, ActivityAbout.class);
 			startActivity(telaAbout);
-			
-			
+
 			return true;
 
 		case R.id.id_sair:
@@ -130,7 +147,8 @@ public class PrincipalActivity extends ListActivity {
 
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this)
 				.setTitle("Informações da Reserva")
-				.setIcon(R.drawable.ic_action_about_preto).setView(textEntryView)
+				.setIcon(R.drawable.ic_action_about_preto)
+				.setView(textEntryView)
 				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int whichButton) {
@@ -142,8 +160,8 @@ public class PrincipalActivity extends ListActivity {
 
 	}
 
-	public void cancelarReserva(View view){
-		
+	public void cancelarReserva(View view) {
+
 		AlertDialog.Builder alertCancelarReserva = new AlertDialog.Builder(
 				PrincipalActivity.this);
 		alertCancelarReserva.setIcon(R.drawable.ic_action_warning);
@@ -170,12 +188,114 @@ public class PrincipalActivity extends ListActivity {
 				});
 
 		alertCancelarReserva.show();
-		
-		
+
+	}
+
+	private void listaDeReservas(String email) {
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+
+		try {
+			String json = acessaWeb("http://192.168.25.7:8080/WebcadeService/reserva/listarTodas/"+email);
+			parseJSON(json);
+//			Toast.makeText(getApplicationContext(), json, Toast.LENGTH_LONG)
+//					.show();
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(),
+					"Sem conexão com a internet!", Toast.LENGTH_LONG).show();
+		}
 	}
 	
-	
-	
-	
-	
+	private String acessaWeb(String link) {
+
+        URL url;
+        try {
+            url = new URL(link);
+
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+
+            connection.setDoOutput(false);
+            connection.setDoInput(true);
+
+            connection.setRequestMethod("GET");
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                String resposta = readString(connection.getInputStream());
+                return resposta;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+	private String readString(InputStream in) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in,
+                "iso-8859-1"));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        while ((inputLine = reader.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        return response.toString();
+    }
+
+	private void parseJSON(String json) {
+		reservas = new ArrayList<Reserva>();
+		
+		String data = null;
+		String ativo = null;
+		String descricao = null;
+		String disponivelParaLocacao = null;
+		String id = null;
+		String manutencao = null;
+		String numeroDeSerie = null;
+		String numeroTombamento = null;
+		String idDeNovo = null; // (tipoEquipamento) << Novo objeto
+		String nome = null;
+		String qtd = null;
+		String qtdAlocada = null;
+		String idReserva = null;
+
+        Reserva reserva = null;
+        try {
+        	JSONObject meuJson = new JSONObject(json);
+        	JSONArray reservaArray = meuJson.getJSONArray("reserva");
+
+        		for (int i=0; i < reservaArray.length(); i++){
+        			JSONObject reservaObject = reservaArray.getJSONObject(i);
+        				data = reservaObject.getString("data");
+        			
+        			JSONObject equipamento = reservaObject.getJSONObject("equipamento");
+        				ativo = equipamento.getString("ativo");
+        				descricao = equipamento.getString("descricao");
+        				disponivelParaLocacao = equipamento.getString("disponivelParaLocacao");
+        				id = equipamento.getString("id");
+        				manutencao = equipamento.getString("manutencao");
+        				numeroDeSerie = equipamento.getString("numeroDeSerie");
+        				numeroTombamento = equipamento.getString("numeroTombamento");
+
+        			JSONObject tipoEquipamento = equipamento.getJSONObject("tipoEquipamento");
+        				idDeNovo = tipoEquipamento.getString("id");
+        				nome = tipoEquipamento.getString("nome");
+        				qtd = tipoEquipamento.getString("quantidade");
+        				qtdAlocada = tipoEquipamento.getString("quantidadeAlocada");
+
+        				idReserva = reservaObject.getString("id");
+        		
+        				reserva = new Reserva("Reserva Realizada", "Mais informações", "-", descricao, data, numeroDeSerie);
+                        reservas.add(reserva);
+        		}
+
+                
+                
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }
