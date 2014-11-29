@@ -54,8 +54,8 @@ public class ReservaAdapter extends BaseAdapter {
 				.findViewById(R.id.id_txt_titulo);
 		TextView txtSubTitulo = (TextView) linhaView
 				.findViewById(R.id.id_txt_subtitulo);
-		ImageView img = (ImageView) linhaView
-				.findViewById(R.id.id_img_principal);
+//		ImageView img = (ImageView) linhaView
+//				.findViewById(R.id.id_img_principal);
 
 		ImageView imgReserva = (ImageView) linhaView
 				.findViewById(R.id.id_img_reserva);
@@ -67,7 +67,7 @@ public class ReservaAdapter extends BaseAdapter {
 
 		imgReserva.setImageResource(R.drawable.ic_datashow);
 
-		img.setImageResource(R.drawable.ic_action_cancel);
+		//img.setImageResource(R.drawable.ic_action_cancel);
 
 		return linhaView;
 	}

@@ -40,15 +40,6 @@
         android:layout_toRightOf="@+id/id_img_reserva"
         android:textStyle="italic" />
 
-    <ImageView
-        android:id="@+id/id_img_principal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/id_txt_subtitulo"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="18dp" 
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:onClick="cancelarReserva"/>
+    
 
 </RelativeLayout>

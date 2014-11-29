@@ -33,36 +33,24 @@ import com.lugia.webcad.adapters.ReservaAdapter;
 import com.lugia.webcad.entidade.Reserva;
 
 public class PrincipalActivity extends ListActivity {
-	private ArrayList<Reserva> reservas;
-	
+	private ArrayList<Reserva> reservas;//lista com todos os dados do array
+	private String emailUsuario;//local para salvar email do usuario logado
+	private int idReserva; // id da reserva obitido no metodo onListItemClick();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_principal);
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle("Reservas realizadas");
-
-//		List<Reserva> reservas = new ArrayList<Reserva>();
-//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-//		reservas.add(new Reserva("Reserva realizada", "Mais informações",
-//				"Curso", "Equipamento", "dd/MM/yyyy", "01:23:12"));
-
+		// pegando email da tela de login
 		Intent it = getIntent();
 		String email = it.getStringExtra("email");
-		
+		// metodo para ler o json com base no email passado e colocar seu
+		// resultado no ArrayList - reservas
 		listaDeReservas(email);
+		//aqui salvamos o email do usuario na pagina para atualizações da mesma 
+		emailUsuario = email;
 		
-//		Toast.makeText(getApplicationContext(), ""+reservas.get(0).getData(),
-//				Toast.LENGTH_SHORT).show();
 		ReservaAdapter reservaAdapeter = new ReservaAdapter(reservas, this);
 		ListView lista = (ListView) findViewById(android.R.id.list);
 		lista.setAdapter(reservaAdapeter);
@@ -83,6 +71,7 @@ public class PrincipalActivity extends ListActivity {
 		switch (item.getItemId()) {
 		case R.id.id_adicionar_reserva:
 			Intent it = new Intent(this, ActivityReserva.class);
+			it.putExtra("email", emailUsuario);
 			startActivity(it);
 
 			return true;
@@ -140,19 +129,51 @@ public class PrincipalActivity extends ListActivity {
 	/* Selecionando um item de uma lista e executando uma ação apartir dele */
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-
-		LayoutInflater alertInfo = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		final View textEntryView = alertInfo.inflate(
-				R.layout.activity_informacao, null);
-
+		idReserva = reservas.get(position).getId();//salva o id da reserva na variavel idReserva referente a posição selecionada
+		
+		Toast.makeText(PrincipalActivity.this,
+				""+idReserva,
+				Toast.LENGTH_LONG).show();
+		
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this)
 				.setTitle("Informações da Reserva")
+				.setMessage(
+						"Equipamento : "
+								+ reservas.get(position).getEquipamento()
+								+ "\n" + "Numero de Serie : "
+								+ reservas.get(position).getNumeroDeSerie()
+								+ "\n" + "Data da reserva : "
+								+ reservas.get(position).getData())
 				.setIcon(R.drawable.ic_action_about_preto)
-				.setView(textEntryView)
-				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				.setPositiveButton("Cancelar Reserva", new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int whichButton) {
+						AlertDialog.Builder alertCancelarReserva = new AlertDialog.Builder(
+								PrincipalActivity.this);
+						alertCancelarReserva.setIcon(R.drawable.ic_action_warning);
+						alertCancelarReserva.setTitle("Cancelar Reserva?");
+						alertCancelarReserva
+								.setMessage("Você tem certeza que deseja cancelar a reserva selecionada?");
 
+						// Método executado se escolher Sim
+						alertCancelarReserva.setPositiveButton("Sim",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int whichButton) {
+										// conecta com o webservice e apaga o item selecionado
+										desistirReserva(""+idReserva);
+										
+
+									}
+								});
+						// Método executado se escolher Não
+						alertCancelarReserva.setNegativeButton("Não",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int whichButton) {
+
+									}
+								});
+
+						alertCancelarReserva.show();
 					}
 				});
 
@@ -160,36 +181,37 @@ public class PrincipalActivity extends ListActivity {
 
 	}
 
-	public void cancelarReserva(View view) {
-
-		AlertDialog.Builder alertCancelarReserva = new AlertDialog.Builder(
-				PrincipalActivity.this);
-		alertCancelarReserva.setIcon(R.drawable.ic_action_warning);
-		alertCancelarReserva.setTitle("Cancelar Reserva?");
-		alertCancelarReserva
-				.setMessage("Você tem certeza que deseja cancelar a reserva selecionada?");
-
-		// Método executado se escolher Sim
-		alertCancelarReserva.setPositiveButton("Sim",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						Toast.makeText(PrincipalActivity.this,
-								"Reserva cancelada com sucesso!",
-								Toast.LENGTH_LONG).show();
-
-					}
-				});
-		// Método executado se escolher Não
-		alertCancelarReserva.setNegativeButton("Não",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-
-					}
-				});
-
-		alertCancelarReserva.show();
-
-	}
+	
+//	public void cancelarReserva(View view) {
+//		
+//		AlertDialog.Builder alertCancelarReserva = new AlertDialog.Builder(
+//				PrincipalActivity.this);
+//		alertCancelarReserva.setIcon(R.drawable.ic_action_warning);
+//		alertCancelarReserva.setTitle("Cancelar Reserva?");
+//		alertCancelarReserva
+//				.setMessage("Você tem certeza que deseja cancelar a reserva selecionada?");
+//
+//		// Método executado se escolher Sim
+//		alertCancelarReserva.setPositiveButton("Sim",
+//				new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int whichButton) {
+//						// conecta com o webservice e apaga o item selecionado
+//						desistirReserva(""+idReserva);
+//						
+//
+//					}
+//				});
+//		// Método executado se escolher Não
+//		alertCancelarReserva.setNegativeButton("Não",
+//				new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int whichButton) {
+//
+//					}
+//				});
+//
+//		alertCancelarReserva.show();
+//
+//	}
 
 	private void listaDeReservas(String email) {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -197,56 +219,55 @@ public class PrincipalActivity extends ListActivity {
 		StrictMode.setThreadPolicy(policy);
 
 		try {
-			String json = acessaWeb("http://192.168.25.7:8080/WebcadeService/reserva/listarTodas/"+email);
+			String json = acessaWeb("http://192.168.25.7:8080/WebcadeService/reserva/listarTodas/"
+					+ email);
 			parseJSON(json);
-//			Toast.makeText(getApplicationContext(), json, Toast.LENGTH_LONG)
-//					.show();
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(),
 					"Sem conexão com a internet!", Toast.LENGTH_LONG).show();
 		}
 	}
-	
+
 	private String acessaWeb(String link) {
 
-        URL url;
-        try {
-            url = new URL(link);
+		URL url;
+		try {
+			url = new URL(link);
 
-            HttpURLConnection connection = (HttpURLConnection) url
-                    .openConnection();
+			HttpURLConnection connection = (HttpURLConnection) url
+					.openConnection();
 
-            connection.setDoOutput(false);
-            connection.setDoInput(true);
+			connection.setDoOutput(false);
+			connection.setDoInput(true);
 
-            connection.setRequestMethod("GET");
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String resposta = readString(connection.getInputStream());
-                return resposta;
-            }
+			connection.setRequestMethod("GET");
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				String resposta = readString(connection.getInputStream());
+				return resposta;
+			}
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
 	private String readString(InputStream in) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in,
-                "iso-8859-1"));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-        while ((inputLine = reader.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-        return response.toString();
-    }
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in,
+				"iso-8859-1"));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while ((inputLine = reader.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+		return response.toString();
+	}
 
 	private void parseJSON(String json) {
 		reservas = new ArrayList<Reserva>();
-		
+
 		String data = null;
 		String ativo = null;
 		String descricao = null;
@@ -261,41 +282,65 @@ public class PrincipalActivity extends ListActivity {
 		String qtdAlocada = null;
 		String idReserva = null;
 
-        Reserva reserva = null;
-        try {
-        	JSONObject meuJson = new JSONObject(json);
-        	JSONArray reservaArray = meuJson.getJSONArray("reserva");
+		Reserva reserva = null;
+		try {
+			JSONObject meuJson = new JSONObject(json);
+			JSONArray reservaArray = meuJson.getJSONArray("reserva");
 
-        		for (int i=0; i < reservaArray.length(); i++){
-        			JSONObject reservaObject = reservaArray.getJSONObject(i);
-        				data = reservaObject.getString("data");
-        			
-        			JSONObject equipamento = reservaObject.getJSONObject("equipamento");
-        				ativo = equipamento.getString("ativo");
-        				descricao = equipamento.getString("descricao");
-        				disponivelParaLocacao = equipamento.getString("disponivelParaLocacao");
-        				id = equipamento.getString("id");
-        				manutencao = equipamento.getString("manutencao");
-        				numeroDeSerie = equipamento.getString("numeroDeSerie");
-        				numeroTombamento = equipamento.getString("numeroTombamento");
+			for (int i = 0; i < reservaArray.length(); i++) {
+				JSONObject reservaObject = reservaArray.getJSONObject(i);
+				data = reservaObject.getString("data");
 
-        			JSONObject tipoEquipamento = equipamento.getJSONObject("tipoEquipamento");
-        				idDeNovo = tipoEquipamento.getString("id");
-        				nome = tipoEquipamento.getString("nome");
-        				qtd = tipoEquipamento.getString("quantidade");
-        				qtdAlocada = tipoEquipamento.getString("quantidadeAlocada");
+				JSONObject equipamento = reservaObject
+						.getJSONObject("equipamento");
+				ativo = equipamento.getString("ativo");
+				descricao = equipamento.getString("descricao");
+				disponivelParaLocacao = equipamento
+						.getString("disponivelParaLocacao");
+				id = equipamento.getString("id");
+				manutencao = equipamento.getString("manutencao");
+				numeroDeSerie = equipamento.getString("numeroDeSerie");
+				numeroTombamento = equipamento.getString("numeroTombamento");
 
-        				idReserva = reservaObject.getString("id");
-        		
-        				reserva = new Reserva("Reserva Realizada", "Mais informações", "-", descricao, data, numeroDeSerie);
-                        reservas.add(reserva);
-        		}
+				JSONObject tipoEquipamento = equipamento
+						.getJSONObject("tipoEquipamento");
+				idDeNovo = tipoEquipamento.getString("id");
+				nome = tipoEquipamento.getString("nome");
+				qtd = tipoEquipamento.getString("quantidade");
+				qtdAlocada = tipoEquipamento.getString("quantidadeAlocada");
 
-                
-                
+				idReserva = reservaObject.getString("id");
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+				reserva = new Reserva(Integer.parseInt(idReserva),"Reserva Realizada", "Mais informações",
+						"-", descricao, data, numeroDeSerie);
+				reservas.add(reserva);
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// desistir da reserva
+	private void desistirReserva(String idReserva) {
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+
+		try {
+			acessaWeb("http://192.168.25.7:8080/WebcadeService/reserva/desistirReserva/"
+					+ idReserva);
+			
+			Toast.makeText(PrincipalActivity.this,
+					"Reserva cancelada com sucesso!",
+					Toast.LENGTH_LONG).show();
+			Intent it = new Intent(this, PrincipalActivity.class);
+			it.putExtra("email", emailUsuario);
+			startActivity(it);
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(),
+					"Sem conexão com a internet!", Toast.LENGTH_LONG).show();
+		}
+	}
+
 }

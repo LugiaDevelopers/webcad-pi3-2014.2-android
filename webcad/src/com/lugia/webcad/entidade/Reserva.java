@@ -8,15 +8,16 @@ public class Reserva {
 	private String curso;
 	private String equipamento;
 	private String data;
-	private String tempo;
+	private String numeroDeSerie;
 	
-	public Reserva(String titulo, String subtitulo, String curso, String equipamento, String data, String tempo){
+	public Reserva(int idReserva, String titulo, String subtitulo, String curso, String equipamento, String data, String numeroDeSerie){
 		this.titulo = titulo;
 		this.subtitulo = subtitulo;
 		this.curso = curso;
 		this.equipamento = equipamento;
 		this.data = data;
-		this.tempo = tempo;
+		this.numeroDeSerie = numeroDeSerie;
+		this.id = idReserva;
 	}
 
 	public String getTitulo() {
@@ -59,12 +60,12 @@ public class Reserva {
 		this.data = data;
 	}
 
-	public String getTempo() {
-		return tempo;
+	public String getNumeroDeSerie() {
+		return numeroDeSerie;
 	}
 
-	public void setTempo(String tempo) {
-		this.tempo = tempo;
+	public void setNumeroDeSerie(String numeroDeSerie) {
+		this.numeroDeSerie = numeroDeSerie;
 	}
 
 	public int getId() {
