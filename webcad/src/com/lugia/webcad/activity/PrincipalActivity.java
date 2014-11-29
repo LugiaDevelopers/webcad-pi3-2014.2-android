@@ -131,9 +131,9 @@ public class PrincipalActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		idReserva = reservas.get(position).getId();//salva o id da reserva na variavel idReserva referente a posição selecionada
 		
-		Toast.makeText(PrincipalActivity.this,
-				""+idReserva,
-				Toast.LENGTH_LONG).show();
+//		Toast.makeText(PrincipalActivity.this,
+//				""+idReserva,
+//				Toast.LENGTH_LONG).show();
 		
 		AlertDialog.Builder alerta = new AlertDialog.Builder(this)
 				.setTitle("Informações da Reserva")
@@ -287,7 +287,7 @@ public class PrincipalActivity extends ListActivity {
 			JSONObject meuJson = new JSONObject(json);
 			JSONArray reservaArray = meuJson.getJSONArray("reserva");
 
-			for (int i = 0; i < reservaArray.length(); i++) {
+			for (int i = 1; i < reservaArray.length(); i++) {
 				JSONObject reservaObject = reservaArray.getJSONObject(i);
 				data = reservaObject.getString("data");
 
