@@ -5,7 +5,6 @@
     android:background="@color/branco"
     android:orientation="vertical" >
 
-   
     <Spinner
         android:id="@+id/id_spinner_curso"
         android:layout_width="match_parent"
@@ -15,8 +14,6 @@
         android:layout_marginTop="10dp"
         android:drawSelectorOnTop="true"
         android:prompt="@string/curso_spinner" />
-
- 
 
     <Spinner
         android:id="@+id/id_spinner_equipamento"
@@ -47,7 +44,6 @@
         android:onClick="acao"
         android:text="@string/buscar"
         android:textColor="@color/branco"
-        android:textSize="20sp" 
-        />
+        android:textSize="20sp" />
 
 </LinearLayout>
