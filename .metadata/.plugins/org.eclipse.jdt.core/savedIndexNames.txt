@@ -1,7 +1,5 @@
 INDEX VERSION 1.126+C:\Users\José Allison\Dropbox\DEVELOPER\workspace-pi3\webcad-pi3-2014.2-android\.metadata\.plugins\org.eclipse.jdt.core
-3547016367.index
 1284074322.index
 3370131924.index
-1511486371.index
 1334667384.index
 1668473120.index

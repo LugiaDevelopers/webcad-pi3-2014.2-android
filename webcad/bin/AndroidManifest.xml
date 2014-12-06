@@ -56,8 +56,7 @@
         </activity>
         <activity android:name=".activity.ActivityInformacaoReserva" >
         </activity>
-        <activity android:name=".activity.ActivityAbout" >
-        </activity>
+        <activity android:name=".activity.ActivityAbout"></activity>
     </application>
 
 </manifest>
