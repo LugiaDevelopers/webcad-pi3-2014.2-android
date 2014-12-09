@@ -64,8 +64,19 @@ public class ReservaAdapter extends BaseAdapter {
 		Reserva reserva = this.reservas.get(position);
 		txtTitulo.setText(reserva.getTitulo());
 		txtSubTitulo.setText(reserva.getSubtitulo());
-
-		imgReserva.setImageResource(R.drawable.ic_datashow);
+		//altera os icones ^^
+		if(reserva.getNomeTipo().equalsIgnoreCase("datashow") || reserva.getNomeTipo().equalsIgnoreCase("projetor")){
+			imgReserva.setImageResource(R.drawable.ic_datashow);//define projetor
+		}else if(reserva.getNomeTipo().equalsIgnoreCase("caixadesom")|| reserva.getNomeTipo().equalsIgnoreCase("som")){
+			imgReserva.setImageResource(R.drawable.ic_sound);//define caixa de som
+		}else if(reserva.getNomeTipo().equalsIgnoreCase("cabohdmi") || reserva.getNomeTipo().equalsIgnoreCase("hdmi")){
+			imgReserva.setImageResource(R.drawable.ic_hdmi);// define cabo hdmi
+		}else if(reserva.getNomeTipo().equalsIgnoreCase("notebook") || reserva.getNomeTipo().equalsIgnoreCase("laptop")){
+			imgReserva.setImageResource(R.drawable.ic_notbook);// define notebook
+		}else{
+			imgReserva.setImageResource(R.drawable.ic_action_warning);// nao da suporte ao icone
+		}	
+		
 
 		//img.setImageResource(R.drawable.ic_action_cancel);
 

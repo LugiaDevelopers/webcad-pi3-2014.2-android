@@ -228,7 +228,7 @@ public class ConnectionFactory {
 
 					reserva = new Reserva(Integer.parseInt(idReserva),
 							"Reserva Realizada", "Mais informações", "-",
-							descricao, data, numeroDeSerie);
+							descricao, data, numeroDeSerie, nome);
 					reservas.add(reserva);
 				}
 				

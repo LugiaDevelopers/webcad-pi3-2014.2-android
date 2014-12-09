@@ -9,6 +9,7 @@ public class Reserva {
 	private String equipamento;
 	private String data;
 	private String numeroDeSerie;
+	private String nomeTipo;
 	
 	public Reserva(int idReserva, String titulo, String subtitulo, String curso, String equipamento, String data, String numeroDeSerie){
 		this.titulo = titulo;
@@ -19,6 +20,24 @@ public class Reserva {
 		this.numeroDeSerie = numeroDeSerie;
 		this.id = idReserva;
 	}
+	
+	
+
+	public Reserva(int id, String titulo, String subtitulo, String curso,
+			String equipamento, String data, String numeroDeSerie,
+			String nomeTipo) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.subtitulo = subtitulo;
+		this.curso = curso;
+		this.equipamento = equipamento;
+		this.data = data;
+		this.numeroDeSerie = numeroDeSerie;
+		this.nomeTipo = nomeTipo;
+	}
+
+
 
 	public String getTitulo() {
 		return titulo;
@@ -74,6 +93,18 @@ public class Reserva {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+
+	public String getNomeTipo() {
+		return nomeTipo;
+	}
+
+
+
+	public void setNomeTipo(String nomeTipo) {
+		this.nomeTipo = nomeTipo;
 	}
 
 	
